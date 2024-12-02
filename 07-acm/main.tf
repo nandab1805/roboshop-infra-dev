@@ -1,5 +1,5 @@
 resource "aws_acm_certificate" "nanda" {
-  domain_name       = ".nanda.cfd"
+  domain_name       = "*.nanda.cfd"
   validation_method = "DNS"
 
   tags = merge(
@@ -14,7 +14,7 @@ resource "aws_acm_certificate" "nanda" {
 
 resource "aws_route53_record" "nanda" {
   for_each = {
-    for dvo in aws_acm_certificate.example.domain_validation_options : dvo.domain_name => {
+    for dvo in aws_acm_certificate.nanda.domain_validation_options : dvo.domain_name => {
       name   = dvo.resource_record_name
       record = dvo.resource_record_value
       type   = dvo.resource_record_type
@@ -26,7 +26,7 @@ resource "aws_route53_record" "nanda" {
   records         = [each.value.record]
   ttl             = 60
   type            = each.value.type
-  zone_id         = aws_route53_zone.nanda.zone_id
+  zone_id         = data.aws_route53_zone.nanda.zone_id
 }
 resource "aws_acm_certificate_validation" "nanda" {
   certificate_arn         = aws_acm_certificate.nanda.arn
