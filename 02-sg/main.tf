@@ -132,7 +132,46 @@ resource "aws_security_group_rule" "app_alb_web" {
   protocol                 = "tcp"
   security_group_id        = module.app_alb.sg_id
 }
-
+resource "aws_security_group_rule" "app_alb_cart" {
+  source_security_group_id = module.cart.sg_id
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  security_group_id        = module.app_alb.sg_id
+}
+resource "aws_security_group_rule" "app_alb_shipping" {
+  source_security_group_id = module.shipping.sg_id
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  security_group_id        = module.app_alb.sg_id
+}
+resource "aws_security_group_rule" "app_alb_payment" {
+  source_security_group_id = module.payment.sg_id
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  security_group_id        = module.app_alb.sg_id
+}
+resource "aws_security_group_rule" "app_alb_user" {
+  source_security_group_id = module.user.sg_id
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  security_group_id        = module.app_alb.sg_id
+}
+resource "aws_security_group_rule" "app_alb_catalogue" {
+  source_security_group_id = module.catalogue.sg_id
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  security_group_id        = module.app_alb.sg_id
+}
 resource "aws_security_group_rule" "web_alb_internet" {
   cidr_blocks = ["0.0.0.0/0"]
   type                     = "ingress"
@@ -332,15 +371,22 @@ resource "aws_security_group_rule" "cart_vpn" {
   security_group_id        = module.cart.sg_id
 }
 
-resource "aws_security_group_rule" "cart_web" {
-  source_security_group_id = module.web.sg_id
+# resource "aws_security_group_rule" "cart_web" {
+#   source_security_group_id = module.web.sg_id
+#   type                     = "ingress"
+#   from_port                = 8080
+#   to_port                  = 8080
+#   protocol                 = "tcp"
+#   security_group_id        = module.cart.sg_id
+# }
+resource "aws_security_group_rule" "cart_app_alb" {
+  source_security_group_id = module.app_alb.sg_id
   type                     = "ingress"
   from_port                = 8080
   to_port                  = 8080
   protocol                 = "tcp"
   security_group_id        = module.cart.sg_id
 }
-
 resource "aws_security_group_rule" "cart_shipping" {
   source_security_group_id = module.shipping.sg_id
   type                     = "ingress"
@@ -368,15 +414,22 @@ resource "aws_security_group_rule" "shipping_vpn" {
   security_group_id        = module.shipping.sg_id
 }
 
-resource "aws_security_group_rule" "shipping_web" {
-  source_security_group_id = module.web.sg_id
+# resource "aws_security_group_rule" "shipping_web" {
+#   source_security_group_id = module.web.sg_id
+#   type                     = "ingress"
+#   from_port                = 8080
+#   to_port                  = 8080
+#   protocol                 = "tcp"
+#   security_group_id        = module.shipping.sg_id
+# }
+resource "aws_security_group_rule" "shipping_app_alb" {
+  source_security_group_id = module.app_alb.sg_id
   type                     = "ingress"
   from_port                = 8080
   to_port                  = 8080
   protocol                 = "tcp"
   security_group_id        = module.shipping.sg_id
 }
-
 resource "aws_security_group_rule" "payment_vpn" {
   source_security_group_id = module.vpn.sg_id
   type                     = "ingress"
@@ -386,8 +439,16 @@ resource "aws_security_group_rule" "payment_vpn" {
   security_group_id        = module.payment.sg_id
 }
 
-resource "aws_security_group_rule" "payment_web" {
-  source_security_group_id = module.web.sg_id
+# resource "aws_security_group_rule" "payment_web" {
+#   source_security_group_id = module.web.sg_id
+#   type                     = "ingress"
+#   from_port                = 8080
+#   to_port                  = 8080
+#   protocol                 = "tcp"
+#   security_group_id        = module.payment.sg_id
+# }
+resource "aws_security_group_rule" "payment_app_alb" {
+  source_security_group_id = module.app_alb.sg_id
   type                     = "ingress"
   from_port                = 8080
   to_port                  = 8080
