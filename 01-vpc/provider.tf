@@ -8,7 +8,7 @@ terraform {
 
   backend "s3" {
     bucket = "nanda3s-dev"
-    key    = "vpc-1"
+    key    = "vpc3"
     region = "us-east-1"
     dynamodb_table = "nandadb-locking-dev"
   }
