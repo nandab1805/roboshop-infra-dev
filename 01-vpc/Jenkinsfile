@@ -10,6 +10,9 @@ pipeline {
         disableConcurrentBuilds()
         ansiColor('xterm')
     }
+    parameters{
+        choice(name: 'CHOICE', choices: ['apply', 'destroy'], description: 'Pick something')
+    }
 
     // Build
     stages {
@@ -30,6 +33,8 @@ pipeline {
             }
         }
         stage('Deploy') {
+            when {
+                    "${params.action}" == 'apply' 
             input {
                 message "Should we continue?"
                 ok "Yes, we should."
